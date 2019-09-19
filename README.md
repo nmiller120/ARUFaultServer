@@ -1,6 +1,6 @@
 # ARU Fault Server
 
-The intent of the project is to maintain a simple alarm server for a PLC that is accessable using any IP network connected device using 
+The intent of the project is to maintain a simple alarm server for a PLC that is accessable to any IP network connected device using 
 the MQTT protocol. The basic operation of this server is the following...
  - The server listens for a new fault code to be transmitted from the PLC
  - When a new fault is detected the fault is registered in memory and added to a datalog
