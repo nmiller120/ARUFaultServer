@@ -14,7 +14,7 @@ the MQTT protocol. This project was developed as part of my Senior Design Projec
 We were somewhat limited with what we could do with the communication link between the PLC and the Raspberry Pi. We did not have the budget to purchase a PLC to work with, we were not allowed to run code on the plant IP network and, we were not allowed to wire any physical connections between our Pi and the PLC for testing purposes. The solution we came up with involved creating a simple communication protocol by passing bits between the PLC and Pi using each device's discrete I/O. The protocol works as described below...
 - The PLC provides 6 discrete outputs that are to be recieved by the Raspberry Pi via the Pi's general purpose I/O.
 - 5 of these outputs are used to encode a 5 bit value that is to be read by the Pi. This value represents a fault code.
-- 1 of the outputs is used as a latch bit. When this bit goes high it signals to the pi that the 5-bit fault code is ready to be read. If the code is not in the Pi's log, it is added and timestamped. If the code is in the log, it is removed. 
+- 1 of the outputs is used as a latch bit. When this bit goes high it signals to the Pi that the 5-bit fault code is ready to be read. If the code is not in the Pi's log, it is added and timestamped. If the code is in the log, it is removed. 
 
 ### Level Shifting
 
