@@ -11,7 +11,7 @@
 
 import RPi.GPIO as GPIO # implements an interface with the raspberry pi's GPIO
 import time # used to keep track of event times
-import const # module writtem by us to store program constants
+import const # module stores program constants
 import threading # implements threading
 import paho.mqtt.client as mqtt # implements MQTT protocol for this application
 import socket # used to get this device's hostname
@@ -80,8 +80,8 @@ def publishFaultsONS(topic = "aru_periodic"):
 
 def readMessage(client, userdata, msg):
     # implements the readMessage function required for the message_callback feature
-    # of the MQTT library. When a messaged is published to the topic "aru_rqst"
-    # a message containing faut data is published to the topic "aru_resp"
+    # of the MQTT library. When a message is published to the topic "aru_rqst"
+    # a message containing fault data is published to the topic "aru_resp"
     rcvdCMD = str(msg.payload.decode("utf-8"))
     print("Recieved " + rcvdCMD + " on topic aru_rqst")
     if rcvdCMD == "get faults":
@@ -117,7 +117,7 @@ GPIO.setup(const.errorLED, GPIO.OUT) # initialize error LED, red when no connect
 # until either one is made or we run out of tries.
 for x in range(60):
     try:
-        # when a connection is made the program does the following
+        # when a connection is made, the program does the following
         # - disables the error LED
         # - subscribes to topic aru_rqst
         # - adds a mesage callback to the client object that invokes the funciton
@@ -147,7 +147,7 @@ if ConnectedToBroker:
     status = threading.Thread(target = blinkStatusLED, args = (const.statusLED,))
     status.start()
 
-# Rest of program is an infinite wait loop, handlers for PLC communication are
+# The rest of program is an infinite wait loop, handlers for PLC communication are
 # implemented by the ARU_Interface object, handlers for fault data request are implemented
 # by the MQTT.client object, status LED blinks in a separate thread
 try:

@@ -8,9 +8,9 @@
 # providing to the pi a fault to be logged. Each fault needs provided separately and
 # to remove a fault the PLC is to resend a fault code.
 
-import const
+import const # module provides program constants
 from LatchTimer import *  # handles timing of the latch bit
-import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO # api for RPi's general purpose I/O
 
 class ARU_Interface:
     latch = None # latchTimer object
@@ -27,7 +27,7 @@ class ARU_Interface:
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(const.latchPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-        # setup listener for when latch pin on falling edge
+        # setup listener for latch pin on falling edge
         GPIO.add_event_detect(const.latchPin, GPIO.FALLING, self.latchHandler)
 
         # setup fault code bits as inputs
@@ -36,7 +36,7 @@ class ARU_Interface:
 
     def readFault(self):
         # decodes the fault based on the state of the discrete inputs transmitted
-        # by PLC. Registers the fault in the program
+        # by PLC. Registers the fault in the program.
         faultCode = 0
         y = len(const.faultPin) - 1
         for x in range(len(const.faultPin)):
@@ -50,7 +50,7 @@ class ARU_Interface:
         GPIO.cleanup()
 
     def latchHandler(self, pin):
-        # method is invoked when latch bit goes high, if the latch pin is low
+        # method is invoked when latch bit goes low, if the latch pin is low
         # and is debounced, read the fault into the faultDict
         if not GPIO.input(const.latchPin) and self.latch.checkBounce():
             fault = self.readFault()
