@@ -2,9 +2,9 @@
 # Nick Miller, Tim Dager
 # Last Update: Dec, 2018
 # Project Description:
-#   The ARU Fault server runs as a daemon on the Rasberry Pi, this program
+#   The ARU Fault server is to be ran as a daemon on the Rasberry Pi. This program
 #   listens for a new fault code to be transmitted from the PLC, when a new
-#   when a new fault is detected the fault is registered in memory. When a
+#   fault is detected the fault is registered in memory. When a
 #   request for the fault list is published on the MQTT broker the the sofware
 #   publishes a response containing all fault data.
 
@@ -17,7 +17,7 @@ import paho.mqtt.client as mqtt # implements MQTT protocol for this application
 import socket # used to get this device's hostname
 from ARU_Interface import * # implements the interface with the PLC controlling the air rotational unit
 
-lastSavedTime = 0.0
+lastSavedTime = 0.0 # record of the last time the log file was written to
 statusOK = True # goes low when connection times out
 ConnectedToBroker = False # goes high when connected to broker
 
@@ -97,13 +97,13 @@ def on_disconnect(client, userdata, rc):
     closeComms()
 
 
-# get the hostname of this device and attempt to contact the MQTT broker hosted
+# get the hostname of this device and attempts to contact the MQTT broker hosted
 # on this device
 hName = socket.gethostname()
 print(hName)
 broker =  hName
 
-# client is this application
+# MQTT client object controls messages sent by this application
 client = mqtt.Client("Python ARU")
 
 faultDict = {} # dictionary to contain fault data
@@ -120,8 +120,8 @@ for x in range(60):
         # when a connection is made, the program does the following
         # - disables the error LED
         # - subscribes to topic aru_rqst
-        # - adds a mesage callback to the client object that invokes the funciton
-        # readMessage when a message is published to the topic aru_rqst
+        # - adds a mesage callback to the client object that invokes the function
+        #   readMessage() when a message is published to the topic aru_rqst
         # - provides a function to the MQTT client object to invoke on disconnect
         print("connection attempt " + str(x))
         print("broker is " + broker)
@@ -135,7 +135,7 @@ for x in range(60):
         ConnectedToBroker = True
         break
     except:
-        # attempt a connection in couple seconds
+        # attempt a connection again in couple seconds
         GPIO.output(const.errorLED, GPIO.HIGH)
         print("attempt failed")
         time.sleep(2)

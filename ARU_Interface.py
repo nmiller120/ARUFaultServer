@@ -1,11 +1,12 @@
+# Description of Module: 
 # module defines a single class ARU_Interface, this class handles the communication
-# between the PLC and the raspberry pi. The interface needed to be very basic because
+# between the PLC and the Raspberry Pi. The interface needed to be somewhat basic because
 # we did not have access to a PLC to test with and we were not allowed to run software
-# on GMs network.The solution we went with involved 5 bits being transmitted via
-# 5 separate discrete outputs on the PLC and recieved by the raspberry pis GPIO.
+# on the network at GM's facility. The solution we went with involved 5 bits being transmitted 
+# via 5 separate discrete outputs on the PLC and recieved by the Raspberry Pi's GPIO.
 # One extra discrete output was provided by the PLC the we denote as the latch pin.
 # When this latch pin goes high it signals to the raspberry pi that it is currently
-# providing to the pi a fault to be logged. Each fault needs provided separately and
+# providing to the Pi a fault code to be logged. Each fault needs provided separately and
 # to remove a fault the PLC is to resend a fault code.
 
 import const # module provides program constants
